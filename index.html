@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To-Do List</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
@@ -16,9 +16,17 @@
     <ul id="taskList">
       <!-- Tasks will be dynamically added here -->
     </ul>
-    <!-- Audio element for the 'ding' sound effect -->
+    <!-- Audio elements for sound effects -->
     <audio id="dingSound">
       <source src="ding.mp3" type="audio/mpeg">
+      <!-- Add other audio file formats as needed for cross-browser support -->
+    </audio>
+    <audio id="addSound">
+      <source src="add.mp3" type="audio/mpeg">
+      <!-- Add other audio file formats as needed for cross-browser support -->
+    </audio>
+    <audio id="deleteSound">
+      <source src="delete.mp3" type="audio/mpeg">
       <!-- Add other audio file formats as needed for cross-browser support -->
     </audio>
   </div>
