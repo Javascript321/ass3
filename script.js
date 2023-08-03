@@ -1,51 +1,48 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const addButton = document.getElementById('addButton');
-    const todoInput = document.getElementById('todoInput');
-    const todoList = document.getElementById('todoList');
-  
-    addButton.addEventListener('click', function () {
-      const todoText = todoInput.value.trim();
-      if (todoText === '') return;
-  
-      createTodoItem(todoText);
-      todoInput.value = '';
-    });
-  
-    function createTodoItem(todoText) {
-      const li = document.createElement('li');
-      const checkbox = document.createElement('input');
-      const todoLabel = document.createElement('label');
-      const deleteButton = document.createElement('button');
-  
-      checkbox.type = 'checkbox';
-      todoLabel.textContent = todoText;
-      deleteButton.textContent = 'Delete';
-  
-      checkbox.addEventListener('change', function () {
-        li.classList.toggle('checked');
-        if (checkbox.checked) playDingSound();
-        if (checkbox.checked) moveItemToBottom(li);
-      });
-  
-      deleteButton.addEventListener('click', function () {
-        li.remove();
-      });
-  
-      li.appendChild(checkbox);
-      li.appendChild(todoLabel);
-      li.appendChild(deleteButton);
-      todoList.appendChild(li);
-    }
-  
-    function moveItemToBottom(item) {
-      todoList.appendChild(item);
-    }
-  
-    function playDingSound() {
-      // Play the 'ding' sound when a to-do item is checked
-      // You can use an audio element or any other method to play the sound
-      // For simplicity, let's just log "Ding!" to the console.
-      console.log('Ding!');
-    }
-  });
-  
+const taskList = document.getElementById('taskList');
+const newTaskInput = document.getElementById('newTask');
+const addButton = document.getElementById('addButton');
+const dingSound = document.getElementById('dingSound');
+
+// Function to create a new task element
+function createTaskElement(taskText) {
+  const li = document.createElement('li');
+  li.innerHTML = `
+    <input type="checkbox" class="checkbox">
+    <span>${taskText}</span>
+    <button class="deleteButton">Delete</button>
+  `;
+  return li;
+}
+
+// Function to add a new task
+function addTask() {
+  const taskText = newTaskInput.value.trim();
+  if (taskText !== '') {
+    const taskElement = createTaskElement(taskText);
+    taskList.appendChild(taskElement);
+    newTaskInput.value = '';
+  }
+}
+
+// Function to remove a task
+function removeTask(event) {
+  if (event.target.classList.contains('deleteButton')) {
+    const taskElement = event.target.parentElement;
+    taskList.removeChild(taskElement);
+  }
+}
+
+// Function to mark a task as completed and play the 'ding' sound
+function completeTask(event) {
+  if (event.target.classList.contains('checkbox')) {
+    const taskElement = event.target.parentElement;
+    taskElement.classList.toggle('completed');
+    dingSound.currentTime = 0; // Reset the audio to play from the beginning
+    dingSound.play();
+  }
+}
+
+// Event listeners
+addButton.addEventListener('click', addTask);
+taskList.addEventListener('click', removeTask);
+taskList.addEventListener('change', completeTask);
